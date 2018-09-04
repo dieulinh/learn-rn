@@ -18,12 +18,12 @@ class NewsScreen extends React.Component {
     return (
       <View>
         <Text>Hello NewsScreen</Text>
-        <Card />
+        <NewsCard />
+        <NewsCard />
         <NewsCard />
       </View>
     );
   }
-
 }
 
 export default NewsScreen;

@@ -1,9 +1,12 @@
 import React from 'react'
 import { Text, View } from 'react-native'
+import { Card } from '../common'
 
 const NewsCard = () => {
   return (
-    <Text>News Card component</Text>
+    <Card>
+      <Text>News Card component</Text>
+    </Card>
   )
 }
 
