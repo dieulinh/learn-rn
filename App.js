@@ -1,21 +1,27 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
+import WelcomeScreen from './screens/WelcomeScreen';
+import NewsScreen from './screens/NewsScreen';
+import NewsDetailScreen from './screens/NewsDetailScreen';
+import ContactsScreen from './screens/ContactsScreen';
+import AuthScreen from './screens/AuthScreen';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app, year!dsad!</Text>
-      </View>
-    );
+const newsTabNavigators = createStackNavigator({
+  News: { screen: NewsScreen },
+  NewsDetailScreen: { screen: NewsDetailScreen }
+})
+
+const mainTabNavigators = createBottomTabNavigator({
+  News: { screen: newsTabNavigators },
+  Contacts: { screen: ContactsScreen }
+});
+
+export default createBottomTabNavigator({
+    // Auth: { screen: AuthScreen },
+    Main: { screen: mainTabNavigators }
+  }, {
+    navigationOptions: {
+    tabBarVisible: false
   }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
 });
