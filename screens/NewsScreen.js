@@ -17,7 +17,6 @@ class NewsScreen extends React.Component {
   render() {
     return (
       <View>
-        <Text>Hello NewsScreen</Text>
         <NewsCard />
         <NewsCard />
         <NewsCard />
