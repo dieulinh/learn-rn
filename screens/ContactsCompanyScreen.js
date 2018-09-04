@@ -1,21 +1,21 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-class ContactsScreen extends React.Component {
+class ContactsCompanyScreen extends React.Component {
   static navigationOptions = ({navigation}) => {
     return {
-      title: "Contacts"
+      title: "Companies"
     }
   }
 
   render() {
     return (
       <View>
-        <Text>Hello ContactsScreen</Text>
+        <Text>Hello ContactsCompanyScreen</Text>
       </View>
     )
   }
 
 }
 
-export default ContactsScreen;
+export default ContactsCompanyScreen;

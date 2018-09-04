@@ -1,20 +1,43 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { createBottomTabNavigator, createStackNavigator, createSwitchNavigator } from 'react-navigation';
+import { createMaterialTopTabNavigator, createBottomTabNavigator, createStackNavigator, createSwitchNavigator } from 'react-navigation';
 import WelcomeScreen from './screens/WelcomeScreen';
 import NewsScreen from './screens/NewsScreen';
 import NewsDetailScreen from './screens/NewsDetailScreen';
 import ContactsScreen from './screens/ContactsScreen';
+import ContactsPersonalScreen from './screens/ContactsPersonalScreen';
+import ContactsCompanyScreen from './screens/ContactsCompanyScreen';
 import AuthScreen from './screens/AuthScreen';
 
 const NewsStack = createStackNavigator({
-  News: { screen: NewsScreen },
-  NewsDetailScreen: { screen: NewsDetailScreen }
+  News: {
+    screen: NewsScreen
+  },
+  NewsDetailScreen: {
+    screen: NewsDetailScreen
+  }
+})
+
+const ContactStack = createStackNavigator({
+  Contacts: {
+    screen: createMaterialTopTabNavigator({
+      Personal: ContactsPersonalScreen,
+      Company: ContactsCompanyScreen
+    })
+  }
+}, {
+  navigationOptions: {
+    title: "Contacts"
+  }
 })
 
 const AppTabs = createBottomTabNavigator({
-  News: { screen: NewsStack },
-  Contacts: { screen: ContactsScreen }
+  Contacts: {
+    screen: ContactStack
+  },
+  News: {
+    screen: NewsStack
+  }
 });
 
 export default createSwitchNavigator({

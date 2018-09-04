@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, ScrollView } from 'react-native';
 import { Card } from '../components/common';
 import { NewsCard } from '../components/news';
 
@@ -16,11 +16,11 @@ class NewsScreen extends React.Component {
 
   render() {
     return (
-      <View>
+      <ScrollView style={{flex: 1}}>
         <NewsCard />
         <NewsCard />
         <NewsCard />
-      </View>
+      </ScrollView>
     );
   }
 }
