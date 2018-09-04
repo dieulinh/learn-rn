@@ -1,5 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import { UserItem } from '../components/contacts'
+import { Card } from '../components/common'
 
 class ContactsCompanyScreen extends React.Component {
   static navigationOptions = ({navigation}) => {
@@ -11,7 +13,9 @@ class ContactsCompanyScreen extends React.Component {
   render() {
     return (
       <View>
-        <Text>Hello ContactsCompanyScreen</Text>
+        <Card><UserItem /></Card>
+        <Card><UserItem /></Card>
+        <Card><UserItem /></Card>
       </View>
     )
   }

@@ -7,7 +7,7 @@ let screenHeight = height;
 let screenWidth = width;
 const aspectRatio = screenHeight / screenWidth;
 
-const NewsCard = () => {
+const NewsCard = ({ post }) => {
   return (
     <Card>
 
@@ -16,12 +16,12 @@ const NewsCard = () => {
       </View>
 
       <View style={styles.headerContainer}>
-        <Text style={styles.title}>Go ahead, make my day.</Text>
+        <Text style={styles.title}>{post.title}</Text>
         <View style={styles.metaContainer}>
           <Text style={styles.metaItemAuthor }>Myung Corwin</Text>
           <Text>17.Mai 2018</Text>
         </View>
-        <Text style={styles.content}>Est ut modi. Laborum eum qui. Dolor minima adipisci.</Text>
+        <Text style={styles.content}>{post.content}</Text>
       </View>
 
     </Card>
