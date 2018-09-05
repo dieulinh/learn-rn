@@ -27,10 +27,7 @@ class NewsScreen extends React.Component {
   }
 
   componentDidMount() {
-
-    this._loadNews({}, () => {
-      console.log("Loaded news!!!!");
-    })
+    this._loadNews({page: 1});
   }
 
   _loadNews = (params, callback) => {
@@ -75,8 +72,6 @@ class NewsScreen extends React.Component {
   }
 
   handleRefresh = () => {
-    console.log("onRefresh!!!!");
-
     this.setState({refreshing: true});
     let page = 1;
 
@@ -84,7 +79,6 @@ class NewsScreen extends React.Component {
       page: page
     }, () => {
       this.setState({refreshing: false, is_end: false});
-      console.log("onRefresh Loaded!!!!");
     })
   }
 

@@ -32,12 +32,13 @@ const ContactStack = createStackNavigator({
 })
 
 const AppTabs = createBottomTabNavigator({
-  Contacts: {
-    screen: ContactStack
-  },
   News: {
     screen: NewsStack
+  },
+  Contacts: {
+    screen: ContactStack
   }
+
 });
 
 export default createSwitchNavigator({

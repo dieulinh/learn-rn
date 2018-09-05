@@ -13,9 +13,7 @@ class ContactsCompanyScreen extends React.Component {
   render() {
     return (
       <View>
-        <Card><UserItem /></Card>
-        <Card><UserItem /></Card>
-        <Card><UserItem /></Card>
+        <Card><Text>ContactsCompanyScreen screen</Text></Card>
       </View>
     )
   }

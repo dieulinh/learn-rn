@@ -4,16 +4,16 @@ import { Text, View, Image, Dimensions } from 'react-native'
 let userAvatar = 'http://lorempixel.com/50/50/cats/'
 let companyAvatar = 'http://lorempixel.com/50/50/people/'
 
-const UserItem = () => {
+const UserItem = ({user}) => {
   return (
     <View style={styles.container}>
-      <Image style={styles.userAvatar} source={{uri: userAvatar }} />
+      <Image style={styles.userAvatar} source={{uri: user.avatar_url }} />
 
       <View>
-        <Text>Martin Caslliso</Text>
+        <Text>{user.name}</Text>
         <View style={styles.companyContainer}>
-          <Image style={styles.companyAvatar} source={{uri: companyAvatar }} />
-          <Text>Testing company</Text>
+          <Image style={styles.companyAvatar} source={{uri: user.company_avatar_url }} />
+          <Text>{user.company_name}</Text>
         </View>
       </View>
     </View>
