@@ -45,7 +45,7 @@ const AppTabs = createBottomTabNavigator({
 });
 
 const AppRootNavigator = createSwitchNavigator({
-  // Auth: { screen: AuthScreen },
+  Auth: { screen: AuthScreen },
   AppTabs: { screen: AppTabs }
 });
 
