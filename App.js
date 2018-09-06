@@ -1,6 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { createMaterialTopTabNavigator, createBottomTabNavigator, createStackNavigator, createSwitchNavigator } from 'react-navigation';
+import { Provider } from 'react-redux';
+import store from './store';
+
 import WelcomeScreen from './screens/WelcomeScreen';
 import NewsScreen from './screens/NewsScreen';
 import NewsDetailScreen from './screens/NewsDetailScreen';
@@ -41,7 +44,28 @@ const AppTabs = createBottomTabNavigator({
 
 });
 
-export default createSwitchNavigator({
+const AppRootNavigator = createSwitchNavigator({
   // Auth: { screen: AuthScreen },
   AppTabs: { screen: AppTabs }
 });
+
+const App = () => {
+  return (
+    <Provider store={store}>
+      <View style={styles.container}>
+        <AppRootNavigator />
+      </View>
+    </Provider>
+  )
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff'
+  }
+});
+
+console.log(store.getState());
+
+export default App;

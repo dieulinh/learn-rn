@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text, Button, ScrollView, FlatList, RefreshControl } from 'react-native';
+import { View, Text, ScrollView, FlatList, RefreshControl, Button } from 'react-native';
 import { Card } from '../components/common';
 import { NewsCard } from '../components/news';
 import axios from 'axios';
 import ErrorHandler from '../services/ErrorHandler'
+import { Button as RNEButton } from 'react-native-elements';
 
 class NewsScreen extends React.Component {
 
@@ -101,22 +102,25 @@ class NewsScreen extends React.Component {
     const { posts, refreshing } = this.state;
 
     return (
-      <FlatList
-        refreshControl={
-          <RefreshControl
-            refreshing={ this.state.refreshing }
-          />
-        }
+      <View>
 
-        data={posts}
-        renderItem={ ({ item }) => <NewsCard post={ item } /> }
-        keyExtractor={ (item, index) => item.id.toString() }
-        refreshing={refreshing}
-        onRefresh={this.handleRefresh}
-        onEndReached={this.handleLoadMore}
-        onEndReachedThreshold={0}
-        scrollEventThrottle={200}
-      />
+        <FlatList
+          refreshControl={
+            <RefreshControl
+              refreshing={ this.state.refreshing }
+            />
+          }
+
+          data={posts}
+          renderItem={ ({ item }) => <NewsCard post={ item } /> }
+          keyExtractor={ (item, index) => item.id.toString() }
+          refreshing={refreshing}
+          onRefresh={this.handleRefresh}
+          onEndReached={this.handleLoadMore}
+          onEndReachedThreshold={0}
+          scrollEventThrottle={200}
+        />
+      </View>
     );
   }
 }
