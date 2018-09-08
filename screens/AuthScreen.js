@@ -14,7 +14,6 @@ class AuthScreen extends React.Component {
       if (this.props.current_user) {
         this.props.navigation.navigate("News");
       }
-
     })
 
     // AsyncStorage.removeItem("app_token");
@@ -65,4 +64,5 @@ const styles = {
     rounded: true
   }
 }
+
 export default connect(mapStateToProps, actions)(AuthScreen);

@@ -11,12 +11,25 @@ export const facebookLogin = () => async dispatch => {
     permissions: ['public_profile', 'email']
   });
 
-  // let token = 'EAAdxOZCAAs28BACZAPWpbKZAQ59W79SOY02CemMsEHecK5eY4b43XGWOwM1g2jCqCbsVZC71o8c87hRsEzjIdlAECAs8sKHXFySvxFgbk2YH5RNxZAS7yhkGKVrHHFcMYZCM2UYjZCzvANFXYlu6x5sOTdde6w1WJyr0bGAzYEEamXVRz3tuALQt35JZBbAKdyZAUpqZAt5qfPaAZDZD';
-
   if (type == 'success') {
-    oauthLoginApi('facebook', token).then((loginResultAction) =>{
-      dispatch(loginResultAction);
+    oauthLoginApi('facebook', token).then( async (response) =>{
+
+      console.log("response", response);
+
+      if (response && response.status == 200) {
+        const user = response.data;
+
+        let appToken = user.token;
+
+        await AsyncStorage.setItem("app_token", appToken);
+
+        dispatch({ type: LOGIN_SUCCESS, payload: user });
+      } else {
+        dispatch({ type: LOGIN_FAIL, payload: response });
+      }
+
     });
+
   } else {
 
     let payload = {

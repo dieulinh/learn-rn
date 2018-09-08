@@ -44,7 +44,7 @@ const AppTabs = createBottomTabNavigator({
 
 });
 
-const AppRootNavigator = createSwitchNavigator({
+const AppRoutes = createSwitchNavigator({
   Auth: { screen: AuthScreen },
   AppTabs: { screen: AppTabs }
 });
@@ -53,7 +53,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <View style={styles.container}>
-        <AppRootNavigator />
+        <AppRoutes />
       </View>
     </Provider>
   )

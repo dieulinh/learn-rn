@@ -11,24 +11,7 @@ export const oauthLoginApi = (provider, token) => {
   return axios.post(`${BASE_URL}/api/v1/auth/login`, {
     provider: provider,
     token: token
-  }).then((response) => {
-    json = response.data
-
-    if (json && json.status == 200) {
-      const user = json.data;
-
-      let appToken = user.token;
-
-      axios.defaults.headers.common['X-Api-Token'] = appToken;
-
-      AsyncStorage.setItem("app_token", appToken);
-
-      return { type: LOGIN_SUCCESS, payload: user };
-    } else {
-      return { type: LOGIN_FAIL, payload: json };
-    }
-
-  });
+  }).then((response) => response.data );
 };
 
 export const currentUserInfoApi = async () => {
