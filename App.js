@@ -21,6 +21,13 @@ const NewsStack = createStackNavigator({
   }
 })
 
+const ProfileStack = createStackNavigator({
+  Profile: {
+    screen: ProfileScreen
+  }
+})
+
+
 const ContactStack = createStackNavigator({
   Contacts: {
     screen: createMaterialTopTabNavigator({
@@ -35,15 +42,16 @@ const ContactStack = createStackNavigator({
 })
 
 const AppTabs = createBottomTabNavigator({
+  Profile: {
+    screen: ProfileStack
+  },
   News: {
     screen: NewsStack
   },
   Contacts: {
     screen: ContactStack
   },
-  Profile: {
-    screen: ProfileScreen
-  }
+
 
 });
 

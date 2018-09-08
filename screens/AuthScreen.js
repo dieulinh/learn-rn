@@ -12,7 +12,7 @@ class AuthScreen extends React.Component {
 
     this.props.getCurrentUserInfo().then(() => {
       if (this.props.current_user) {
-        this.props.navigation.navigate("News");
+        this.props.navigation.navigate("Profile");
       }
     })
 

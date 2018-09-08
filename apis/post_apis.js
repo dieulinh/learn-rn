@@ -1,4 +1,4 @@
-import { BASE_URL } from './base';
+import BaseApi from './BaseApi';
 import {
   GET_POSTS_SUCCESS
 } from '../actions/types';
@@ -6,5 +6,5 @@ import {
 import axios from 'axios';
 
 export const getPostsApi = (params) => {
-  return axios.get(`${BASE_URL}/api/v1/posts`, {params: params}).then((response) => response.data);
+  return axios.get(`${BaseApi.baseUrl}/api/v1/posts`, {params: params}).then((response) => response.data);
 }
