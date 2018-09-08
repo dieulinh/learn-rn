@@ -10,7 +10,7 @@ export const getPosts = (params, callback) => dispatch => {
       let posts = response.data;
 
       // mark ended
-      is_end = posts && (posts.length == 0 || posts.length < params.per_page)
+      let is_end = posts && (posts.length == 0 || posts.length < params.per_page)
 
       let payload = {
         posts: posts,

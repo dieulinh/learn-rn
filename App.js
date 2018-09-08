@@ -7,7 +7,6 @@ import store from './store';
 import WelcomeScreen from './screens/WelcomeScreen';
 import NewsScreen from './screens/NewsScreen';
 import NewsDetailScreen from './screens/NewsDetailScreen';
-import ContactsScreen from './screens/ContactsScreen';
 import ContactsPersonalScreen from './screens/ContactsPersonalScreen';
 import ContactsCompanyScreen from './screens/ContactsCompanyScreen';
 import AuthScreen from './screens/AuthScreen';
