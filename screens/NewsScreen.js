@@ -1,7 +1,12 @@
 import React from 'react';
-import { View, Text, ScrollView, FlatList, RefreshControl, Button } from 'react-native';
+
+import {
+  View, Text, ScrollView, FlatList, RefreshControl,
+  Button, TouchableOpacity
+} from 'react-native';
+
 import { Card } from '../components/common';
-import { NewsCard } from '../components/news';
+import { NewsCard, NewsCardDetail } from '../components/news';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
@@ -19,10 +24,7 @@ class NewsScreen extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
     return {
-      title: "News",
-      headerRight: (
-        <Button title='Click me' onPress={ () => { navigation.navigate('NewsDetailScreen') }} />
-        )
+      title: "News"
     }
   }
 
@@ -50,6 +52,20 @@ class NewsScreen extends React.Component {
 
   }
 
+  onCardItemPressed = (item) => {
+    this.props.navigation.navigate('NewsDetailScreen', {
+      item: item
+    })
+  }
+
+  renderCardItem = ({ item }) => {
+    return (
+      <TouchableOpacity onPress={ this.onCardItemPressed.bind(this, item) }>
+        <NewsCard post={ item } />
+      </TouchableOpacity>
+    );
+  }
+
   render() {
     const { refreshing } = this.state;
 
@@ -64,7 +80,7 @@ class NewsScreen extends React.Component {
           }
 
           data={this.props.posts}
-          renderItem={ ({ item }) => <NewsCard post={ item } /> }
+          renderItem={ this.renderCardItem }
           keyExtractor={ (item, index) => item.id.toString() }
           refreshing={refreshing}
           onRefresh={this.handleRefresh}

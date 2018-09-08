@@ -11,6 +11,7 @@ import ContactsScreen from './screens/ContactsScreen';
 import ContactsPersonalScreen from './screens/ContactsPersonalScreen';
 import ContactsCompanyScreen from './screens/ContactsCompanyScreen';
 import AuthScreen from './screens/AuthScreen';
+import ProfileScreen from './screens/ProfileScreen';
 
 const NewsStack = createStackNavigator({
   News: {
@@ -40,6 +41,9 @@ const AppTabs = createBottomTabNavigator({
   },
   Contacts: {
     screen: ContactStack
+  },
+  Profile: {
+    screen: ProfileScreen
   }
 
 });
