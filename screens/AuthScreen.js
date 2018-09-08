@@ -42,9 +42,7 @@ class AuthScreen extends React.Component {
 }
 
 const mapStateToProps = ({ auth }) => {
-  return {
-    current_user: auth.current_user
-  }
+  return { ...auth }
 }
 
 const styles = {

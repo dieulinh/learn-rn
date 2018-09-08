@@ -78,9 +78,6 @@ class NewsScreen extends React.Component {
 }
 
 const mapStateToProps = ({ post }) => {
-
-  console.log("mapStateToProps", post);
-
   return {...post};
 }
 
