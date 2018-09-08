@@ -3,19 +3,18 @@ import { View, Text, ScrollView, FlatList, RefreshControl, Button } from 'react-
 import { Card } from '../components/common';
 import { NewsCard } from '../components/news';
 import axios from 'axios';
+import { connect } from 'react-redux';
+
 import ErrorHandler from '../services/ErrorHandler'
 import { Button as RNEButton } from 'react-native-elements';
+import * as actions from '../actions';
 
 class NewsScreen extends React.Component {
 
   loading = false;
 
   state = {
-    posts: [],
-    refreshing: false,
-    page: 1,
-    per_page: 5,
-    is_end: false
+    refreshing: false
   };
 
   static navigationOptions = ({ navigation }) => {
@@ -28,78 +27,31 @@ class NewsScreen extends React.Component {
   }
 
   componentDidMount() {
-    this._loadNews({page: 1});
-  }
-
-  _loadNews = (params, callback) => {
-
-    let _this = this;
-    _this.loading = true;
-
-    let page = params.page || this.state.page;
-    let { posts, is_end } = this.state;
-
-    params.per_page = this.state.per_page;
-
-    //http://members-apis.herokuapp.com
-    axios.get("http://192.168.1.4:3000/api/v1/posts", {
-      params: params
-    }).then((response) => {
-        _this.loading = false;
-
-        json = response.data
-
-        if (json.status != 200) { return ErrorHandler.handleApiError(json); }
-
-        // append next page data
-        posts = params.page == 1 ? json.data : [...posts, ...json.data]
-
-        // mark ended
-        is_end = json.data && (json.data.length == 0 || json.data.length < this.state.per_page)
-
-        // rerender lists
-        _this.setState({
-          posts: posts,
-          is_end: is_end,
-          page: page
-        }, () => {
-
-          if (callback) {
-            callback()
-          }
-        })
-
-      })
+    this.props.getPosts({page: 1});
   }
 
   handleRefresh = () => {
     this.setState({refreshing: true});
-    let page = 1;
 
-    this._loadNews({
-      page: page
-    }, () => {
+    this.props.getPosts({page: 1}, () => {
       this.setState({refreshing: false, is_end: false});
-    })
+    });
   }
 
   handleLoadMore = () => {
-    if (this.loading || this.state.is_end) { return; }
+    if (this.loading || this.props.is_end) { return; }
 
-    let page = this.state.page;
+    let page = this.props.page;
     page += 1;
 
-    this._loadNews({
-      page: page
-    }, () => {
-      this.setState({refreshing: false});
-      console.log("handleLoadMore Loaded!!!!");
-    })
+    this.props.getPosts({page: page}, () => {
+     this.setState({refreshing: false});
+    });
 
   }
 
   render() {
-    const { posts, refreshing } = this.state;
+    const { refreshing } = this.state;
 
     return (
       <View>
@@ -111,7 +63,7 @@ class NewsScreen extends React.Component {
             />
           }
 
-          data={posts}
+          data={this.props.posts}
           renderItem={ ({ item }) => <NewsCard post={ item } /> }
           keyExtractor={ (item, index) => item.id.toString() }
           refreshing={refreshing}
@@ -125,4 +77,11 @@ class NewsScreen extends React.Component {
   }
 }
 
-export default NewsScreen;
+const mapStateToProps = ({ post }) => {
+
+  console.log("mapStateToProps", post);
+
+  return {...post};
+}
+
+export default connect(mapStateToProps, actions)(NewsScreen);
