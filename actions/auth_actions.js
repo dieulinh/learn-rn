@@ -6,6 +6,8 @@ import {
   LOGIN_FAIL
 } from '../actions/types';
 
+import BaseApi from '../apis/BaseApi';
+
 export const facebookLogin = () => async dispatch => {
   const { type, token } = await Facebook.logInWithReadPermissionsAsync('2094827080561519', {
     permissions: ['public_profile', 'email']
@@ -20,6 +22,8 @@ export const facebookLogin = () => async dispatch => {
         const user = response.data;
 
         let appToken = user.token;
+
+        BaseApi.currentUser = user;
 
         await AsyncStorage.setItem("app_token", appToken);
 
@@ -44,6 +48,9 @@ export const getCurrentUserInfo = () => async dispatch => {
 
   return currentUserInfoApi().then( (response) => {
     if (response.status == 200) {
+      let user = response.data;
+      BaseApi.currentUser = user;
+
       dispatch({type: LOGIN_SUCCESS, payload: response.data});
     } else {
       dispatch({type: LOGIN_FAIL, payload: response});

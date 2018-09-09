@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, AsyncStorage } from 'react-native';
 import { Avatar, Icon } from 'react-native-elements';
 import BaseApi from '../apis/BaseApi';
 
@@ -10,8 +10,9 @@ class ProfileScreen extends React.Component {
     }
   }
 
-  onLogoutPressed = () => {
-
+  onLogoutPressed = async () => {
+    await AsyncStorage.removeItem("app_token");
+    this.props.navigation.navigate("Auth");
   }
 
   renderLogoutButton = () => {
@@ -20,28 +21,29 @@ class ProfileScreen extends React.Component {
     )
   }
   render() {
+    const currentUser = BaseApi.currentUser;
 
+    console.log("currentUser", currentUser)
     return (
       <View style={{flex: 1}}>
         <View style={styles.avatarContainer}>
           <Avatar
             rounded
             xlarge
-            source={{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/kfriedson/128.jpg"}}
-            onPress={() => console.log("Works!")}
+            source={{uri: currentUser.avatar_url}}
             activeOpacity={0.7}
           />
 
-          <Text style={styles.userName}>Nhan Nguyen</Text>
-          <Text style={styles.title}>Software Engineer</Text>
+          <Text style={styles.userName}>{currentUser.name}</Text>
+          <Text style={styles.title}>{currentUser.job_title}</Text>
         </View>
         <View style={styles.rowIconContainer}>
-          <Icon containerStyle={styles.icon} size={15} name='email' />
-          <Text>jerryc.nguyen91@gmail.com</Text>
+          <Icon containerStyle={styles.icon} size={15} name='ios-mail' type='ionicon' />
+          <Text>{currentUser.email}</Text>
         </View>
         <View style={styles.rowIconContainer}>
-          <Icon containerStyle={styles.icon} size={15} name='map' />
-          <Text>123 Hoa Bang</Text>
+          <Icon containerStyle={styles.icon} size={15} name='md-map' type='ionicon' />
+          <Text>{currentUser.formatted_address}</Text>
         </View>
         {this.renderLogoutButton()}
       </View>
