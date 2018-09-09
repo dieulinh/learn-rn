@@ -15,7 +15,8 @@ export const getUsers = (params, callback) => dispatch => {
       let payload = {
         users: users,
         page: params.page,
-        is_end: is_end
+        is_end: is_end,
+        keyword: params.keyword
       }
 
       dispatch({type: GET_USERS_SUCCESS, payload: payload})

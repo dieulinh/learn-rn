@@ -3,20 +3,15 @@ import { View, Text, Button, AsyncStorage } from 'react-native';
 import { Avatar, Icon } from 'react-native-elements';
 import BaseApi from '../apis/BaseApi';
 
-class ProfileScreen extends React.Component {
+class UserDetailScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: "Profile"
+      header: null
     }
   }
 
-  onLogoutPressed = async () => {
-    await AsyncStorage.removeItem("app_token");
-    this.props.navigation.navigate("Auth");
-  }
-
   render() {
-    const currentUser = BaseApi.currentUser;
+    const user = this.props.navigation.getParam("user", {});;
 
     return (
       <View style={{flex: 1}}>
@@ -24,23 +19,21 @@ class ProfileScreen extends React.Component {
           <Avatar
             rounded
             xlarge
-            source={{uri: currentUser.avatar_url}}
+            source={{uri: user.avatar_url}}
             activeOpacity={0.7}
           />
 
-          <Text style={styles.userName}>{currentUser.name}</Text>
-          <Text style={styles.title}>{currentUser.job_title}</Text>
+          <Text style={styles.userName}>{user.name}</Text>
+          <Text style={styles.title}>{user.job_title}</Text>
         </View>
         <View style={styles.rowIconContainer}>
           <Icon containerStyle={styles.icon} size={15} name='ios-mail' type='ionicon' />
-          <Text>{currentUser.email}</Text>
+          <Text>{user.email}</Text>
         </View>
         <View style={styles.rowIconContainer}>
           <Icon containerStyle={styles.icon} size={15} name='md-map' type='ionicon' />
-          <Text>{currentUser.formatted_address}</Text>
+          <Text>{user.formatted_address}</Text>
         </View>
-
-        <Button title='Logout' onPress={ this.onLogoutPressed } />
       </View>
     )
   }
@@ -73,4 +66,4 @@ const styles = {
   }
 }
 
-export default ProfileScreen;
+export default UserDetailScreen;

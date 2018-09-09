@@ -11,6 +11,7 @@ import ContactsPersonalScreen from './screens/ContactsPersonalScreen';
 import ContactsCompanyScreen from './screens/ContactsCompanyScreen';
 import AuthScreen from './screens/AuthScreen';
 import ProfileScreen from './screens/ProfileScreen';
+import UserDetailScreen from './screens/UserDetailScreen';
 
 const NewsStack = createStackNavigator({
   News: {
@@ -21,20 +22,32 @@ const NewsStack = createStackNavigator({
   }
 })
 
+const UserDetailStack = createStackNavigator({
+  UserDetail: {
+    screen: UserDetailScreen
+  }
+})
+
 const ProfileStack = createStackNavigator({
   Profile: {
     screen: ProfileScreen
   }
 })
 
+const ContactsPersonalStack = createStackNavigator({
+  Personal: ContactsPersonalScreen
+})
+
+const ContactTabs = createMaterialTopTabNavigator({
+  Personal: {
+    screen: ContactsPersonalStack
+  },
+  Company: ContactsCompanyScreen
+})
 
 const ContactStack = createStackNavigator({
-  Contacts: {
-    screen: createMaterialTopTabNavigator({
-      Personal: ContactsPersonalScreen,
-      Company: ContactsCompanyScreen
-    })
-  }
+  ContactTabs: ContactTabs,
+  UserDetailStack: UserDetailStack
 }, {
   navigationOptions: {
     title: "Contacts"
@@ -42,22 +55,14 @@ const ContactStack = createStackNavigator({
 })
 
 const AppTabs = createBottomTabNavigator({
-  Profile: {
-    screen: ProfileStack
-  },
-  News: {
-    screen: NewsStack
-  },
-  Contacts: {
-    screen: ContactStack
-  },
-
-
+  News: NewsStack,
+  Contacts: ContactStack,
+  Profile: ProfileStack
 });
 
 const AppRoutes = createSwitchNavigator({
-  Auth: { screen: AuthScreen },
-  AppTabs: { screen: AppTabs }
+  Auth: AuthScreen,
+  AppTabs: AppTabs
 });
 
 const App = () => {
