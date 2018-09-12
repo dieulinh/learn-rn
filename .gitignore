@@ -435,5 +435,5 @@ GitHub.sublime-settings
 !*.xcworkspace/contents.xcworkspacedata
 /*.gcno
 
-
+/android/.idea/
 # End of https://www.gitignore.io/api/xcode,android,reactnative,sublimetext,androidstudio,cocoapods
