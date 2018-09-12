@@ -1,7 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { createMaterialTopTabNavigator, createBottomTabNavigator, createStackNavigator, createSwitchNavigator } from 'react-navigation';
+import {
+  createMaterialTopTabNavigator, createBottomTabNavigator,
+  createStackNavigator, createSwitchNavigator
+} from 'react-navigation';
+
 import { Provider } from 'react-redux';
 import store from './store';
 
