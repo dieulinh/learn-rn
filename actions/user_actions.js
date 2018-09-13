@@ -1,5 +1,6 @@
 import {
-  GET_USERS_SUCCESS
+  GET_USERS_SUCCESS,
+  FILTER_PERSONAL_CONTACT_CHANGED
 } from '../actions/types';
 
 import { getUsersApi } from '../apis/user_apis'
@@ -26,4 +27,8 @@ export const getUsers = (params, callback) => dispatch => {
       callback();
     }
   })
+}
+
+export const changePersonalContactsFilter = (filter) => dispatch => {
+  dispatch({type: FILTER_PERSONAL_CONTACT_CHANGED, payload: filter})
 }

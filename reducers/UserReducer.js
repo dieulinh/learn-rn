@@ -1,5 +1,6 @@
 import {
-  GET_USERS_SUCCESS
+  GET_USERS_SUCCESS,
+  FILTER_PERSONAL_CONTACT_CHANGED
 } from '../actions/types';
 
 import { uniqBy } from 'lodash';
@@ -15,10 +16,19 @@ export default (state = {}, action) => {
       users = uniqBy(users, (user) => user.id);
 
       return {
+        ...state,
         ...action.payload,
         users: users
       };
+    case FILTER_PERSONAL_CONTACT_CHANGED: 
 
+      return {
+        ...state,
+        filter: {
+          gender: "male",
+          age: 10
+        }
+      }
     default:
       return state;
 

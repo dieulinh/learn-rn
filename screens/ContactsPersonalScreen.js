@@ -4,14 +4,10 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import { UserItem } from '../components/contacts'
-import { Card } from '../components/common'
-import axios from 'axios';
-import ErrorHandler from '../services/ErrorHandler'
 import { connect } from 'react-redux';
 import  * as actions from '../actions';
 
-import { List, ListItem, Avatar } from 'react-native-elements';
+import { List, ListItem, Avatar, Icon } from 'react-native-elements';
 import Search from 'react-native-search-box';
 
 class ContactsPersonalScreen extends React.Component {
@@ -30,8 +26,21 @@ class ContactsPersonalScreen extends React.Component {
   }
 
   componentDidMount() {
-
     this.props.getUsers({page: 1, per_page: 10});
+  }
+
+  componentDidUpdate(prevProps) {
+    const isChanged = this.isFilterChanged(prevProps.filter);
+
+    if (isChanged) {
+      this.props.getUsers({page: 1, per_page: 10, filter: this.props.filter});
+    }
+  }
+
+  isFilterChanged(prevFilter) {
+    const currentFilter = this.props.filter;
+    if (!prevFilter && currentFilter) { return true; }
+    return prevFilter && (prevFilter.gender != currentFilter.gender || prevFilter.age != currentFilter.age)
   }
 
   handleRefresh = () => {
@@ -128,9 +137,12 @@ class ContactsPersonalScreen extends React.Component {
 
 }
 
-const mapStateToProps = ({user}) => {
+const mapStateToProps = ({user, filter}) => {
+  console.log("mapStateToProps ContactsPersonalScreen", filter);
+
   return {
-    ...user
+    ...user,
+    ...filter
   }
 }
 

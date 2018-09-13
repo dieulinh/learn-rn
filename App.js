@@ -17,10 +17,12 @@ import ContactsCompanyScreen from './screens/ContactsCompanyScreen';
 import AuthScreen from './screens/AuthScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import UserDetailScreen from './screens/UserDetailScreen';
+import PersonalContactFilterModal from './modals/PersonalContactFilterModal';
+
 
 const NewsStack = createStackNavigator({
   News: {
-    screen: NewsScreen
+    screen: PersonalContactFilterModal
   },
   NewsDetailScreen: {
     screen: NewsDetailScreen
@@ -52,11 +54,17 @@ const ContactTabs = createMaterialTopTabNavigator({
 
 const ContactStack = createStackNavigator({
   ContactTabs: ContactTabs,
-  UserDetailStack: UserDetailStack
-}, {
-  navigationOptions: {
-    title: "Contacts"
+  UserDetailStack: UserDetailStack,
+  ModalContactFilter: {
+    screen: PersonalContactFilterModal
   }
+}, {
+  navigationOptions: ({ navigation }) => ({
+    title: "Contacts",
+    headerRight: (
+      <Icon name={'menu'} onPress={ () => navigation.navigate("ModalContactFilter") }/>
+    )
+  })
 })
 
 const AppTabs = createBottomTabNavigator({
