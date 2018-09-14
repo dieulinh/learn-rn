@@ -3,9 +3,6 @@ import { Text, View, Slider, Button, AsyncStorage } from 'react-native';
 import { Icon, Text as RNEText, CheckBox } from 'react-native-elements';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
-import {
-  FILTER_PERSONAL_CONTACT_CHANGED
-} from '../actions/types';
 
 class PersonalContactFilterModal extends React.Component {
 

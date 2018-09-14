@@ -17,6 +17,7 @@ import AuthScreen from './screens/AuthScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import UserDetailScreen from './screens/UserDetailScreen';
 import PersonalContactFilterModal from './modals/PersonalContactFilterModal';
+import NewsFilterModal from './modals/NewsFilterModal';
 
 const NewsStack = createStackNavigator({
   News: {
@@ -24,6 +25,9 @@ const NewsStack = createStackNavigator({
   },
   NewsDetailScreen: {
     screen: NewsDetailScreen
+  },
+  NewsFilterModal: {
+    screen: NewsFilterModal
   }
 })
 

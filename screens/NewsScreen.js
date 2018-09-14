@@ -1,18 +1,13 @@
 import React from 'react';
 
 import {
-  View, Text, ScrollView, FlatList, RefreshControl,
-  Button, TouchableOpacity
+  View, FlatList, RefreshControl, TouchableOpacity
 } from 'react-native';
 
-import { Card } from '../components/common';
-import { NewsCard, NewsCardDetail } from '../components/news';
-import axios from 'axios';
+import { NewsCard } from '../components/news';
 import { connect } from 'react-redux';
-
-import ErrorHandler from '../services/ErrorHandler'
-import { Button as RNEButton } from 'react-native-elements';
 import * as actions from '../actions';
+import { Icon } from 'react-native-elements';
 
 class NewsScreen extends React.Component {
 
@@ -24,12 +19,23 @@ class NewsScreen extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
     return {
-      title: "News"
+      title: "News",
+      headerRight: (
+        <Icon name={'filter'} type='font-awesome' onPress={ () => navigation.navigate("NewsFilterModal", { handleFilter: navigation.state.params.handleFilter }) }/>
+      )
     }
+  }
+
+  handleFilter = (filterParams) => {
+    this.props.getPosts({page: 1, filter: filterParams}, () => {
+      this.setState({refreshing: false, is_end: false});
+    });
   }
 
   componentDidMount() {
     this.props.getPosts({page: 1});
+
+    this.props.navigation.setParams({ handleFilter: this.handleFilter });
   }
 
   handleRefresh = () => {
