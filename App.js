@@ -18,6 +18,8 @@ import ProfileScreen from './screens/ProfileScreen';
 import UserDetailScreen from './screens/UserDetailScreen';
 import PersonalContactFilterModal from './modals/PersonalContactFilterModal';
 import NewsFilterModal from './modals/NewsFilterModal';
+import EventsScreen from './screens/EventsScreen';
+import EventFilterModal from './modals/EventFilterModal';
 
 const NewsStack = createStackNavigator({
   News: {
@@ -71,9 +73,19 @@ const ContactStack = createStackNavigator({
   }
 });
 
+const EventStack = createStackNavigator({
+  Events: {
+    screen: EventsScreen
+  },
+  EventFilterModal: {
+    screen: EventFilterModal
+  }
+})
+
 const AppTabs = createBottomTabNavigator({
   News: NewsStack,
   Contacts: ContactStack,
+  Events: EventStack,
   Profile: ProfileStack
 }, {
     navigationOptions: ({ navigation }) => ({
@@ -86,6 +98,8 @@ const AppTabs = createBottomTabNavigator({
           iconName = `contacts${focused ? '' : ''}`;
         } else if (routeName === 'Profile') {
           iconName = `person${focused ? '' : '-outline'}`;
+        } else if (routeName === 'Events') {
+          iconName = `event${focused ? '' : ''}`;
         }
 
         // You can return any component that you like here! We usually use an

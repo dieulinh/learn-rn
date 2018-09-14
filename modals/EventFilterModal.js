@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 import DatePicker from 'react-native-datepicker'
 
-class NewsFilterModal extends React.Component {
+class EventFilterModal extends React.Component {
 
   state = {
     start_date: '',
@@ -41,7 +41,7 @@ class NewsFilterModal extends React.Component {
       <View style={styles.container}>
         <View style={styles.rowContainer}>
           <Icon style={{marginRight: 10}} name={'close'} onPress={this.onClose}/>
-          <RNEText h3>Filter News</RNEText>
+          <RNEText h3>Filter Events</RNEText>
         </View>
 
         <View>
@@ -144,4 +144,4 @@ const styles = {
   }
 }
 
-export default connect(null, actions)(NewsFilterModal);
+export default connect(null, actions)(EventFilterModal);
