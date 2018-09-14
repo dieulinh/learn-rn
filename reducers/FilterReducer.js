@@ -4,13 +4,10 @@ import {
 
 export default (state = {}, action) => {
 
+  console.log("FILTER_PERSONAL_CONTACT_CHANGED", action.payload);
   switch (action.type) {
     case FILTER_PERSONAL_CONTACT_CHANGED: 
-      return  {
-        gender: "male",
-        age: 10
-      }
-
+      return  { ...action.payload };
     default:
       return state;
       

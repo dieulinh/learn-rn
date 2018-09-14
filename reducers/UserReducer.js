@@ -20,15 +20,6 @@ export default (state = {}, action) => {
         ...action.payload,
         users: users
       };
-    case FILTER_PERSONAL_CONTACT_CHANGED: 
-
-      return {
-        ...state,
-        filter: {
-          gender: "male",
-          age: 10
-        }
-      }
     default:
       return state;
 

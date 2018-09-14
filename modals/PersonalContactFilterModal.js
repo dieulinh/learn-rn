@@ -10,6 +10,7 @@ import {
 class PersonalContactFilterModal extends React.Component {
 
   state = {
+    isMale: true,
     fromAge: 18,
     toAge: 30
   }
@@ -25,7 +26,13 @@ class PersonalContactFilterModal extends React.Component {
   }
   
   onApplyFilter = () => {
-    this.props.changePersonalContactsFilter({type: FILTER_PERSONAL_CONTACT_CHANGED, payload: {}})
+    const payload = {
+      is_male: this.state.isMale,
+      from_age: this.state.fromAge,
+      to_age: this.state.toAge
+    };
+
+    this.props.changePersonalContactsFilter(payload);
     this.onClose();
   }
 
@@ -33,6 +40,10 @@ class PersonalContactFilterModal extends React.Component {
     console.log("PersonalContactFilterModal componentWillReceiveProps", nextProps.filter);
   }
 
+  onChangeGender = (isMale) => {
+    this.setState({isMale})
+  }
+  
   render () {
     return (
       <View style={styles.container}>
@@ -52,7 +63,8 @@ class PersonalContactFilterModal extends React.Component {
               title='Male'
               checkedIcon='dot-circle-o'
               uncheckedIcon='circle-o'
-              checked={true}
+              checked={this.state.isMale}
+              onPress={ () => this.onChangeGender(true) }
             />
 
             <CheckBox
@@ -60,7 +72,8 @@ class PersonalContactFilterModal extends React.Component {
               title='Female'
               checkedIcon='dot-circle-o'
               uncheckedIcon='circle-o'
-              checked={false}
+              checked={!this.state.isMale}
+              onPress={ () => this.onChangeGender(false) }
             />
 
           </View>

@@ -31,7 +31,6 @@ class ContactsPersonalScreen extends React.Component {
 
   componentDidUpdate(prevProps) {
     const isChanged = this.isFilterChanged(prevProps.filter);
-
     if (isChanged) {
       this.props.getUsers({page: 1, per_page: 10, filter: this.props.filter});
     }
@@ -39,8 +38,9 @@ class ContactsPersonalScreen extends React.Component {
 
   isFilterChanged(prevFilter) {
     const currentFilter = this.props.filter;
-    if (!prevFilter && currentFilter) { return true; }
-    return prevFilter && (prevFilter.gender != currentFilter.gender || prevFilter.age != currentFilter.age)
+
+    if (typeof prevFilter === 'undefined' && currentFilter) { return true; }
+    return (typeof prevFilter !== 'undefined' && (prevFilter.is_male != currentFilter.is_male || prevFilter.from_age != currentFilter.from_age || prevFilter.to_age != currentFilter.to_age));
   }
 
   handleRefresh = () => {
@@ -138,11 +138,9 @@ class ContactsPersonalScreen extends React.Component {
 }
 
 const mapStateToProps = ({user, filter}) => {
-  console.log("mapStateToProps ContactsPersonalScreen", filter);
-
   return {
     ...user,
-    ...filter
+    filter
   }
 }
 

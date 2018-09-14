@@ -29,6 +29,6 @@ export const getUsers = (params, callback) => dispatch => {
   })
 }
 
-export const changePersonalContactsFilter = (filter) => dispatch => {
-  dispatch({type: FILTER_PERSONAL_CONTACT_CHANGED, payload: filter})
+export const changePersonalContactsFilter = (payload) => dispatch => {
+  dispatch({type: FILTER_PERSONAL_CONTACT_CHANGED, payload: payload})
 }
