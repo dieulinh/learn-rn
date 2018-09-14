@@ -20,6 +20,8 @@ import PersonalContactFilterModal from './modals/PersonalContactFilterModal';
 import NewsFilterModal from './modals/NewsFilterModal';
 import EventsScreen from './screens/EventsScreen';
 import EventFilterModal from './modals/EventFilterModal';
+import EventDetailScreen from './screens/EventDetailScreen';
+
 
 const NewsStack = createStackNavigator({
   News: {
@@ -62,7 +64,7 @@ const ContactStack = createStackNavigator({
   ModalContactFilter: {
     screen: PersonalContactFilterModal
   }
-}, { 
+}, {
   navigationOptions: ({ navigation }) => {
     return {
       title: "Contacts",
@@ -76,6 +78,9 @@ const ContactStack = createStackNavigator({
 const EventStack = createStackNavigator({
   Events: {
     screen: EventsScreen
+  },
+  EventDetail: {
+    screen: EventDetailScreen
   },
   EventFilterModal: {
     screen: EventFilterModal

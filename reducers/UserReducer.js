@@ -1,12 +1,11 @@
 import {
-  GET_USERS_SUCCESS,
-  FILTER_PERSONAL_CONTACT_CHANGED
+  GET_USERS_SUCCESS
 } from '../actions/types';
 
 import { uniqBy } from 'lodash';
 
 export default (state = {}, action) => {
-
+action
   switch (action.type) {
     case GET_USERS_SUCCESS:
       let { page, keyword } = action.payload;
