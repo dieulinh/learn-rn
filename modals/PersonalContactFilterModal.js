@@ -26,18 +26,13 @@ class PersonalContactFilterModal extends React.Component {
   }
   
   onApplyFilter = () => {
-    const payload = {
+    const filter = {
       is_male: this.state.isMale,
       from_age: this.state.fromAge,
       to_age: this.state.toAge
     };
 
-    this.props.changePersonalContactsFilter(payload);
-    this.onClose();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    console.log("PersonalContactFilterModal componentWillReceiveProps", nextProps.filter);
+    this.props.navigation.navigate("Personal", {filter: filter});
   }
 
   onChangeGender = (isMale) => {

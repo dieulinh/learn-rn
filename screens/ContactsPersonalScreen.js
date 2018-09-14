@@ -11,7 +11,7 @@ import { List, ListItem, Avatar, Icon } from 'react-native-elements';
 import Search from 'react-native-search-box';
 
 class ContactsPersonalScreen extends React.Component {
-  loading = false;
+  prevFilter = null;
 
   state = {
     refreshing: false
@@ -30,17 +30,18 @@ class ContactsPersonalScreen extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const isChanged = this.isFilterChanged(prevProps.filter);
+    const currentFilter = this.props.navigation.getParam("filter", null);
+    const isChanged = this.isFilterChanged(currentFilter, this.prevFilter);
+
     if (isChanged) {
-      this.props.getUsers({page: 1, per_page: 10, filter: this.props.filter});
+      this.prevFilter = currentFilter;
+      this.props.getUsers({page: 1, per_page: 10, filter: currentFilter});
     }
   }
 
-  isFilterChanged(prevFilter) {
-    const currentFilter = this.props.filter;
-
-    if (typeof prevFilter === 'undefined' && currentFilter) { return true; }
-    return (typeof prevFilter !== 'undefined' && (prevFilter.is_male != currentFilter.is_male || prevFilter.from_age != currentFilter.from_age || prevFilter.to_age != currentFilter.to_age));
+  isFilterChanged(currentFilter, prevFilter) {
+    if ( prevFilter == null && currentFilter != null) { return true; }
+    return (prevFilter !== null && (prevFilter.is_male != currentFilter.is_male || prevFilter.from_age != currentFilter.from_age || prevFilter.to_age != currentFilter.to_age));
   }
 
   handleRefresh = () => {

@@ -58,14 +58,16 @@ const ContactStack = createStackNavigator({
   ModalContactFilter: {
     screen: PersonalContactFilterModal
   }
-}, {
-  navigationOptions: ({ navigation }) => ({
-    title: "Contacts",
-    headerRight: (
-      <Icon name={'menu'} onPress={ () => navigation.navigate("ModalContactFilter") }/>
-    )
-  })
-})
+}, { 
+  navigationOptions: ({ navigation }) => {
+    return {
+      title: "Contacts",
+      headerRight: (
+        <Icon name={'menu'} onPress={ () => navigation.navigate("ModalContactFilter") }/>
+      )
+    }
+  }
+});
 
 const AppTabs = createBottomTabNavigator({
   News: NewsStack,
