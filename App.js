@@ -9,7 +9,6 @@ import {
 import { Provider } from 'react-redux';
 import store from './store';
 
-import WelcomeScreen from './screens/WelcomeScreen';
 import NewsScreen from './screens/NewsScreen';
 import NewsDetailScreen from './screens/NewsDetailScreen';
 import ContactsPersonalScreen from './screens/ContactsPersonalScreen';
@@ -19,10 +18,9 @@ import ProfileScreen from './screens/ProfileScreen';
 import UserDetailScreen from './screens/UserDetailScreen';
 import PersonalContactFilterModal from './modals/PersonalContactFilterModal';
 
-
 const NewsStack = createStackNavigator({
   News: {
-    screen: PersonalContactFilterModal
+    screen: NewsScreen
   },
   NewsDetailScreen: {
     screen: NewsDetailScreen
@@ -63,7 +61,7 @@ const ContactStack = createStackNavigator({
     return {
       title: "Contacts",
       headerRight: (
-        <Icon name={'menu'} onPress={ () => navigation.navigate("ModalContactFilter") }/>
+        <Icon name={'filter'} type='font-awesome' onPress={ () => navigation.navigate("ModalContactFilter") }/>
       )
     }
   }

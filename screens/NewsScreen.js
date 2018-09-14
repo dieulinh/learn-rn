@@ -85,7 +85,7 @@ class NewsScreen extends React.Component {
           refreshing={refreshing}
           onRefresh={this.handleRefresh}
           onEndReached={this.handleLoadMore}
-          onEndReachedThreshold={1}
+          onEndReachedThreshold={0.1}
           scrollEventThrottle={200}
         />
       </View>

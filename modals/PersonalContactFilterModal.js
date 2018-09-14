@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Slider, Button } from 'react-native';
+import { Text, View, Slider, Button, AsyncStorage } from 'react-native';
 import { Icon, Text as RNEText, CheckBox } from 'react-native-elements';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
@@ -10,9 +10,9 @@ import {
 class PersonalContactFilterModal extends React.Component {
 
   state = {
-    isMale: true,
-    fromAge: 18,
-    toAge: 30
+    is_male: true,
+    from_age: 18,
+    to_age: 30
   }
 
   static navigationOptions = ({navigation}) => {
@@ -26,17 +26,28 @@ class PersonalContactFilterModal extends React.Component {
   }
   
   onApplyFilter = () => {
-    const filter = {
-      is_male: this.state.isMale,
-      from_age: this.state.fromAge,
-      to_age: this.state.toAge
-    };
+    const filter = { is_male, from_age, to_age } = this.state;
 
+    AsyncStorage.setItem("personal_contacts_filter", JSON.stringify(filter));
     this.props.navigation.navigate("Personal", {filter: filter});
   }
 
-  onChangeGender = (isMale) => {
-    this.setState({isMale})
+  loadStoredFilter = async () => {
+    const filterStr = await AsyncStorage.getItem("personal_contacts_filter");
+    let filter = null;
+    try {
+      filter = JSON.parse(filterStr);
+    } catch (error) {}
+
+    this.setState({...filter});
+  }
+
+  componentDidMount = () => {
+    this.loadStoredFilter();
+  }
+
+  onChangeGender = (is_male) => {
+    this.setState({is_male})
   }
   
   render () {
@@ -58,7 +69,7 @@ class PersonalContactFilterModal extends React.Component {
               title='Male'
               checkedIcon='dot-circle-o'
               uncheckedIcon='circle-o'
-              checked={this.state.isMale}
+              checked={this.state.is_male}
               onPress={ () => this.onChangeGender(true) }
             />
 
@@ -67,7 +78,7 @@ class PersonalContactFilterModal extends React.Component {
               title='Female'
               checkedIcon='dot-circle-o'
               uncheckedIcon='circle-o'
-              checked={!this.state.isMale}
+              checked={!this.state.is_male}
               onPress={ () => this.onChangeGender(false) }
             />
 
@@ -84,9 +95,9 @@ class PersonalContactFilterModal extends React.Component {
               minimumValue={18}
               maximumValue={100}
               step={1}
-              value={this.state.fromAge}
-              onValueChange={(fromAge) => this.setState({fromAge})} />
-            <Text>From age: {this.state.fromAge}</Text>
+              value={this.state.from_age}
+              onValueChange={(from_age) => this.setState({from_age})} />
+            <Text>From age: {this.state.from_age}</Text>
           </View>
 
           <View styles={styles.sliderContainer}>
@@ -94,9 +105,9 @@ class PersonalContactFilterModal extends React.Component {
               minimumValue={18}
               maximumValue={100}
               step={1}
-              value={this.state.toAge}
-              onValueChange={(toAge) => this.setState({toAge})} />
-            <Text>To age: {this.state.toAge}</Text>
+              value={this.state.to_age}
+              onValueChange={(to_age) => this.setState({to_age})} />
+            <Text>To age: {this.state.to_age}</Text>
           </View>
 
           <Button title='Apply' onPress={ this.onApplyFilter } />
