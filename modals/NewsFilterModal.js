@@ -14,7 +14,8 @@ class NewsFilterModal extends React.Component {
 
   static navigationOptions = ({navigation}) => {
     return {
-      header: null
+      header: null,
+      mode: 'modal'
     }
   }
 

@@ -32,7 +32,9 @@ const NewsStack = createStackNavigator({
   NewsFilterModal: {
     screen: NewsFilterModal
   }
-})
+}, {
+  mode: 'modal',
+});
 
 const UserDetailStack = createStackNavigator({
   UserDetail: {

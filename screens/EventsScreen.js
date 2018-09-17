@@ -41,7 +41,11 @@ class EventsScreen extends React.Component {
 
   updateIndex = (selectedTabIndex) => {
     this.setState({ selectedTabIndex }, () => {
-      
+      this.props.getEvents({
+        page: 1,
+        per_page: 10,
+        type: this.selectedListType()
+      });
     });
   }
 
@@ -112,7 +116,6 @@ class EventsScreen extends React.Component {
     const component1 = () => <Text>New events</Text>
     const component2 = () => <Text>Archived Events</Text>
     const buttons = [{ element: component1 }, { element: component2 }]
-
 
     return (
       <View>
