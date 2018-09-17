@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, FlatList, RefreshControl, TouchableOpacity } from 'react-native';
 import Search from 'react-native-search-box';
-import { List, ListItem, Avatar, Icon } from 'react-native-elements';
+import { List, ListItem, Avatar, Icon, ButtonGroup } from 'react-native-elements';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
@@ -11,37 +11,51 @@ class EventsScreen extends React.Component {
     return {
       title: "Events",
       headerRight: (
-        <Icon name={'filter'} type='font-awesome' onPress={ () => navigation.navigate("EventFilterModal", { handleFilter: navigation.state.params.handleFilter }) }/>
+        <Icon name={'filter'} type='font-awesome' onPress={() => navigation.navigate("EventFilterModal", { handleFilter: navigation.state.params.handleFilter })} />
       )
     }
   }
 
   state = {
-    refreshing: false
+    refreshing: false,
+    selectedTabIndex: 0
   };
 
   searchingText = ""
 
   handleFilter = (filterParams) => {
-    console.log("perform handleFilter", filterParams);
+    this.props.getEvents({page: 1, filter: filterParams}, () => {
+      this.setState({refreshing: false, is_end: false});
+    });
   }
 
   componentDidMount() {
-    this.props.getEvents({page: 1, per_page: 10});
+    this.props.getEvents({ page: 1, per_page: 10, type: this.selectedListType() });
 
     this.props.navigation.setParams({ handleFilter: this.handleFilter });
   }
 
+  selectedListType = () => {
+    return this.state.selectedTabIndex == 0 ? "new" : "archived";
+  }
+
+  updateIndex = (selectedTabIndex) => {
+    this.setState({ selectedTabIndex }, () => {
+      
+    });
+  }
+
   handleRefresh = () => {
-    this.setState({refreshing: true});
+    this.setState({ refreshing: true });
     let page = 1;
 
     this.props.getEvents({
       page: page,
       per_page: 10,
-      keyword: this.searchingText
+      keyword: this.searchingText,
+      type: this.selectedListType()
     }, () => {
-      this.setState({refreshing: false, is_end: false});
+      this.setState({ refreshing: false, is_end: false });
     })
   }
 
@@ -53,21 +67,22 @@ class EventsScreen extends React.Component {
 
     this.props.getEvents({
       page: page,
-      per_page: 10
+      per_page: 10,
+      type: this.selectedListType()
     }, () => {
-      this.setState({refreshing: false});
+      this.setState({ refreshing: false });
     })
 
   }
 
   renderListItem = ({ item }) => {
     return (
-      <TouchableOpacity onPress={ this.onItemPressed.bind(this, item) }>
+      <TouchableOpacity onPress={this.onItemPressed.bind(this, item)}>
         <ListItem
           avatar={<Avatar
-                  source={item.thumb_url && {uri: item.thumb_url}}
-                  title={item.title}
-                />}
+            source={item.thumb_url && { uri: item.thumb_url }}
+            title={item.title}
+          />}
           title={item.title}
         />
       </TouchableOpacity>
@@ -80,7 +95,8 @@ class EventsScreen extends React.Component {
     this.props.getEvents({
       page: 1,
       per_page: 10,
-      keyword: text
+      keyword: text, 
+      type: this.selectedListType()
     })
   }
 
@@ -91,42 +107,56 @@ class EventsScreen extends React.Component {
   }
 
   render() {
-    const { refreshing } = this.state;
+    const { refreshing, selectedTabIndex } = this.state;
+
+    const component1 = () => <Text>New events</Text>
+    const component2 = () => <Text>Archived Events</Text>
+    const buttons = [{ element: component1 }, { element: component2 }]
 
     return (
       <View>
+        
+        <List containerStyle={{ marginTop: 0 }}>
+          <View>
+            <ButtonGroup
+              onPress={this.updateIndex}
+              selectedIndex={selectedTabIndex}
+              buttons={buttons}
+              containerStyle={{height: 35}} />
+          </View>
 
-        <List containerStyle={{marginTop: 0}}>
-          <View style={{marginBottom: 10}}>
-            <Search onChangeText={this.onSearch}/>
+          <View style={{ marginBottom: 10 }}>
+            <Search onChangeText={this.onSearch} />
           </View>
 
           <FlatList
             refreshControl={
               <RefreshControl
-                refreshing={ this.state.refreshing }
+                refreshing={this.state.refreshing}
               />
             }
 
             data={this.props.events}
-            renderItem={ this.renderListItem }
-            keyExtractor={ (item, index) => item.id.toString() }
+            renderItem={this.renderListItem}
+            keyExtractor={(item, index) => item.id.toString()}
             refreshing={refreshing}
             onRefresh={this.handleRefresh}
             onEndReached={this.handleLoadMore}
             onEndReachedThreshold={0}
             scrollEventThrottle={200}
           />
+
+          
         </List>
       </View>
     )
   }
-
-
 }
 
+// export default EventsScreen;
+
+
 const mapStateToProps = (state) => {
-  console.log("mapStateToProps EventsScreen", state.event);
   return {
     ...state.event
   }

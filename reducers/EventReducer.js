@@ -17,7 +17,6 @@ export default (state = {}, action) => {
       events = uniqBy(events, (event) => event.id);
 
       return {
-        ...state,
         ...action.payload,
         events: events
       };

@@ -5,7 +5,6 @@ import {
 import { uniqBy } from 'lodash';
 
 export default (state = {}, action) => {
-action
   switch (action.type) {
     case GET_USERS_SUCCESS:
       let { page, keyword } = action.payload;

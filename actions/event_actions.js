@@ -4,10 +4,8 @@ import {
 
 import { getEventsApi } from '../apis/event_apis'
 
-export const getEvents = (params, callback) => dispatch => {
-  getEventsApi(params).then (response => {
-
-    console.log("response.status", response.status, response.data);
+export const getEvents = (params, callback) => (dispatch) => {
+  getEventsApi(params).then(response => {
 
     if (response.status == 200) {
       let events = response.data;
@@ -22,7 +20,7 @@ export const getEvents = (params, callback) => dispatch => {
         keyword: params.keyword
       }
 
-      dispatch({type: GET_EVENTS_SUCCESS, payload: payload})
+      dispatch({ type: GET_EVENTS_SUCCESS, payload: payload })
     }
 
     if (callback) {
