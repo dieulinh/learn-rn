@@ -11,12 +11,11 @@ import store from './store';
 
 import NewsScreen from './screens/NewsScreen';
 import NewsDetailScreen from './screens/NewsDetailScreen';
-import ContactsPersonalScreen from './screens/ContactsPersonalScreen';
-import ContactsCompanyScreen from './screens/ContactsCompanyScreen';
+import ContactsScreen from './screens/ContactsScreen';
 import AuthScreen from './screens/AuthScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import UserDetailScreen from './screens/UserDetailScreen';
-import PersonalContactFilterModal from './modals/PersonalContactFilterModal';
+import ContactFilterModal from './modals/ContactFilterModal';
 import NewsFilterModal from './modals/NewsFilterModal';
 import EventsScreen from './screens/EventsScreen';
 import EventFilterModal from './modals/EventFilterModal';
@@ -47,31 +46,13 @@ const ProfileStack = createStackNavigator({
   }
 })
 
-const ContactsPersonalStack = createStackNavigator({
-  Personal: ContactsPersonalScreen
-})
-
-const ContactTabs = createMaterialTopTabNavigator({
-  Personal: {
-    screen: ContactsPersonalStack
-  },
-  Company: ContactsCompanyScreen
-})
-
 const ContactStack = createStackNavigator({
-  ContactTabs: ContactTabs,
+  Contacts: {
+    screen: ContactsScreen
+  },
   UserDetailStack: UserDetailStack,
   ModalContactFilter: {
-    screen: PersonalContactFilterModal
-  }
-}, {
-  navigationOptions: ({ navigation }) => {
-    return {
-      title: "Contacts",
-      headerRight: (
-        <Icon name={'filter'} type='font-awesome' onPress={ () => navigation.navigate("ModalContactFilter") }/>
-      )
-    }
+    screen: ContactFilterModal
   }
 });
 

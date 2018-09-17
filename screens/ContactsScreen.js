@@ -7,41 +7,51 @@ import {
 import { connect } from 'react-redux';
 import  * as actions from '../actions';
 
-import { List, ListItem, Avatar, Icon } from 'react-native-elements';
+import { List, ListItem, Avatar, Icon, ButtonGroup } from 'react-native-elements';
 import Search from 'react-native-search-box';
 
-class ContactsPersonalScreen extends React.Component {
+class ContactsScreen extends React.Component {
   prevFilter = null;
 
   state = {
-    refreshing: false
+    refreshing: false,
+    selectedTabIndex: 0
   };
 
   searchingText = ""
 
   static navigationOptions = ({navigation}) => {
     return {
-      header: null
+      title: "Contacts",
+      headerRight: (
+        <Icon name={'filter'} type='font-awesome' onPress={() => navigation.navigate("ModalContactFilter", { handleFilter: navigation.state.params.handleFilter })} />
+      )
     }
+  }
+
+  handleFilter = (filterParams) => {
+    this.props.getUsers({page: 1, type: this.selectedListType(), filter: filterParams}, () => {
+      this.setState({refreshing: false, is_end: false});
+    });
+  }
+
+  selectedListType = () => {
+    return this.state.selectedTabIndex == 0 ? "personal" : "company";
+  }
+
+  updateIndex = (selectedTabIndex) => {
+    this.setState({ selectedTabIndex }, () => {
+      this.props.getUsers({
+        page: 1,
+        per_page: 10,
+        type: this.selectedListType()
+      });
+    });
   }
 
   componentDidMount() {
     this.props.getUsers({page: 1, per_page: 10});
-  }
-
-  componentDidUpdate(prevProps) {
-    const currentFilter = this.props.navigation.getParam("filter", null);
-    const isChanged = this.isFilterChanged(currentFilter, this.prevFilter);
-
-    if (isChanged) {
-      this.prevFilter = currentFilter;
-      this.props.getUsers({page: 1, per_page: 10, filter: currentFilter});
-    }
-  }
-
-  isFilterChanged(currentFilter, prevFilter) {
-    if ( prevFilter == null && currentFilter != null) { return true; }
-    return (prevFilter !== null && (prevFilter.is_male != currentFilter.is_male || prevFilter.from_age != currentFilter.from_age || prevFilter.to_age != currentFilter.to_age));
+    this.props.navigation.setParams({ handleFilter: this.handleFilter });
   }
 
   handleRefresh = () => {
@@ -51,7 +61,8 @@ class ContactsPersonalScreen extends React.Component {
     this.props.getUsers({
       page: page,
       per_page: 10,
-      keyword: this.searchingText
+      keyword: this.searchingText,
+      type: this.selectedListType()
     }, () => {
       this.setState({refreshing: false, is_end: false});
     })
@@ -65,7 +76,8 @@ class ContactsPersonalScreen extends React.Component {
 
     this.props.getUsers({
       page: page,
-      per_page: 10
+      per_page: 10,
+      type: this.selectedListType()
     }, () => {
       this.setState({refreshing: false});
     })
@@ -100,17 +112,30 @@ class ContactsPersonalScreen extends React.Component {
     this.props.getUsers({
       page: 1,
       per_page: 10,
-      keyword: text
+      keyword: text,
+      type: this.selectedListType()
     })
   }
 
   render() {
-    const { refreshing } = this.state;
+    const { refreshing, selectedTabIndex } = this.state;
+
+    const component1 = () => <Text>Personal</Text>
+    const component2 = () => <Text>Company</Text>
+    const buttons = [{ element: component1 }, { element: component2 }]
 
     return (
       <View>
 
         <List containerStyle={{marginTop: 0}}>
+          <View>
+            <ButtonGroup
+              onPress={this.updateIndex}
+              selectedIndex={selectedTabIndex}
+              buttons={buttons}
+              containerStyle={{height: 35}} />
+          </View>
+
           <View style={{marginBottom: 10}}>
             <Search onChangeText={this.onSearch}/>
           </View>
@@ -145,4 +170,4 @@ const mapStateToProps = ({user, filter}) => {
   }
 }
 
-export default connect(mapStateToProps, actions)(ContactsPersonalScreen);
+export default connect(mapStateToProps, actions)(ContactsScreen);

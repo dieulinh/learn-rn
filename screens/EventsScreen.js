@@ -113,6 +113,7 @@ class EventsScreen extends React.Component {
     const component2 = () => <Text>Archived Events</Text>
     const buttons = [{ element: component1 }, { element: component2 }]
 
+
     return (
       <View>
         

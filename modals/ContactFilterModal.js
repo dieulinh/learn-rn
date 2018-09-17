@@ -4,7 +4,7 @@ import { Icon, Text as RNEText, CheckBox } from 'react-native-elements';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
-class PersonalContactFilterModal extends React.Component {
+class ContactFilterModal extends React.Component {
 
   state = {
     is_male: true,
@@ -19,14 +19,19 @@ class PersonalContactFilterModal extends React.Component {
   }
 
   onClose = () => {
-    const screen = this.props.navigation.goBack();
+    this.props.navigation.goBack();
   }
   
   onApplyFilter = () => {
     const filter = { is_male, from_age, to_age } = this.state;
 
     AsyncStorage.setItem("personal_contacts_filter", JSON.stringify(filter));
-    this.props.navigation.navigate("Personal", {filter: filter});
+    
+    if (this.parentHandleFilter) {
+      this.parentHandleFilter(filter);
+    }
+
+    this.onClose();
   }
 
   loadStoredFilter = async () => {
@@ -41,6 +46,8 @@ class PersonalContactFilterModal extends React.Component {
 
   componentDidMount = () => {
     this.loadStoredFilter();
+
+    this.parentHandleFilter = this.props.navigation.getParam("handleFilter", null);
   }
 
   onChangeGender = (is_male) => {
@@ -141,4 +148,4 @@ const styles = {
   }
 }
 
-export default connect(null, actions)(PersonalContactFilterModal);
+export default connect(null, actions)(ContactFilterModal);
