@@ -30,7 +30,7 @@ class EventsScreen extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getEvents({ page: 1, per_page: 10, type: this.selectedListType() });
+    this.props.getEvents({ page: 1, per_page: 15, type: this.selectedListType() });
 
     this.props.navigation.setParams({ handleFilter: this.handleFilter });
   }
@@ -43,7 +43,7 @@ class EventsScreen extends React.Component {
     this.setState({ selectedTabIndex }, () => {
       this.props.getEvents({
         page: 1,
-        per_page: 10,
+        per_page: 15,
         type: this.selectedListType()
       });
     });
@@ -55,7 +55,7 @@ class EventsScreen extends React.Component {
 
     this.props.getEvents({
       page: page,
-      per_page: 10,
+      per_page: 15,
       keyword: this.searchingText,
       type: this.selectedListType()
     }, () => {
@@ -71,7 +71,7 @@ class EventsScreen extends React.Component {
 
     this.props.getEvents({
       page: page,
-      per_page: 10,
+      per_page: 15,
       type: this.selectedListType()
     }, () => {
       this.setState({ refreshing: false });
@@ -98,7 +98,7 @@ class EventsScreen extends React.Component {
 
     this.props.getEvents({
       page: 1,
-      per_page: 10,
+      per_page: 15,
       keyword: text, 
       type: this.selectedListType()
     })
@@ -118,7 +118,7 @@ class EventsScreen extends React.Component {
     const buttons = [{ element: component1 }, { element: component2 }]
 
     return (
-      <View>
+      <View style={{flex: 1}}>
         
         <List containerStyle={{ marginTop: 0 }}>
           <View>
@@ -146,7 +146,7 @@ class EventsScreen extends React.Component {
             refreshing={refreshing}
             onRefresh={this.handleRefresh}
             onEndReached={this.handleLoadMore}
-            onEndReachedThreshold={0}
+            onEndReachedThreshold={0.01}
             scrollEventThrottle={200}
           />
 

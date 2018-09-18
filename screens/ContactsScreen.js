@@ -125,7 +125,7 @@ class ContactsScreen extends React.Component {
     const buttons = [{ element: component1 }, { element: component2 }]
 
     return (
-      <View>
+      <View style={{flex: 1}}>
 
         <List containerStyle={{marginTop: 0}}>
           <View>
@@ -153,7 +153,7 @@ class ContactsScreen extends React.Component {
             refreshing={refreshing}
             onRefresh={this.handleRefresh}
             onEndReached={this.handleLoadMore}
-            onEndReachedThreshold={0}
+            onEndReachedThreshold={0.01}
             scrollEventThrottle={200}
           />
         </List>
