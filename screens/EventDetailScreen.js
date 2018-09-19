@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
+import { EventItemDetail } from '../components/events';
 
 class EventDetailScreen extends React.Component {
 
@@ -11,7 +12,7 @@ class EventDetailScreen extends React.Component {
 
     return (
       <View>
-        <Text>{item.title}</Text>
+        <EventItemDetail event={item}/>
       </View>
     );
   }

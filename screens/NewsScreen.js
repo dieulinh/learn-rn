@@ -59,6 +59,7 @@ class NewsScreen extends React.Component {
   }
 
   onCardItemPressed = (item) => {
+
     this.props.navigation.navigate('NewsDetailScreen', {
       item: item
     })

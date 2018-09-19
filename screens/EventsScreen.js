@@ -4,6 +4,7 @@ import Search from 'react-native-search-box';
 import { List, ListItem, Avatar, Icon, ButtonGroup } from 'react-native-elements';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import { EventItem } from '../components/events';
 
 class EventsScreen extends React.Component {
 
@@ -82,13 +83,7 @@ class EventsScreen extends React.Component {
   renderListItem = ({ item }) => {
     return (
       <TouchableOpacity onPress={this.onItemPressed.bind(this, item)}>
-        <ListItem
-          avatar={<Avatar
-            source={item.thumb_url && { uri: item.thumb_url }}
-            title={item.title}
-          />}
-          title={item.title}
-        />
+        <EventItem event={item} />
       </TouchableOpacity>
     );
   }
@@ -139,7 +134,6 @@ class EventsScreen extends React.Component {
                 refreshing={this.state.refreshing}
               />
             }
-
             data={this.props.events}
             renderItem={this.renderListItem}
             keyExtractor={(item, index) => item.id.toString()}
@@ -149,16 +143,11 @@ class EventsScreen extends React.Component {
             onEndReachedThreshold={0.01}
             scrollEventThrottle={200}
           />
-
-          
         </List>
       </View>
     )
   }
 }
-
-// export default EventsScreen;
-
 
 const mapStateToProps = (state) => {
   return {
